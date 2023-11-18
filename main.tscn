@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://bpfti7afamof1"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_evqkp"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_u8w4f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_802ef"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mapt3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pbphv"]
+albedo_color = Color(0.278431, 0.4, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ds12i"]
+albedo_color = Color(1, 0.431373, 0.227451, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jxrms"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6a802"]
+
+[node name="Main" type="Node3D"]
+
+[node name="FirstPlatform" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstPlatform"]
+shape = SubResource("BoxShape3D_802ef")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FirstPlatform"]
+mesh = SubResource("BoxMesh_mapt3")
+surface_material_override/0 = SubResource("StandardMaterial3D_pbphv")
+
+[node name="SecondPlatform" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29887, 0, -1.20443)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecondPlatform"]
+shape = SubResource("BoxShape3D_802ef")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SecondPlatform"]
+mesh = SubResource("BoxMesh_mapt3")
+surface_material_override/0 = SubResource("StandardMaterial3D_ds12i")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.994151, 0.107999, 5.63653e-17, -0.0174531, 0.160659, 0.986856, 0.10658, -0.981084, 0.161604, 0, 0, 0)
+
+[node name="Player" type="CharacterBody3D" parent="." groups=["AGENT"]]
+transform = Transform3D(0.22, 0, 0, 0, 0.22, 0, 0, 0, 0.22, 0, 0.658545, 0)
+script = ExtResource("1_evqkp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_jxrms")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_6a802")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(4.54545, 0, 0, 0, 3.10857, 3.31632, 0, -3.31632, 3.10857, 0, 4.34198, 6.44173)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_u8w4f")
